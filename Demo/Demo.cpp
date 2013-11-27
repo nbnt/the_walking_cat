@@ -29,6 +29,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 #include <Windows.h>
 #include "window.h"
+#include "Graphics.h"
+
+CGraphics* gpGraphics = nullptr;
 
 void MessageLoop()
 {
@@ -46,6 +49,7 @@ void MessageLoop()
         }
         else
         {
+            gpGraphics->ClearWindow();
         }
     }
 }
@@ -55,6 +59,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     // Create the window
     CWindow* pWindow = nullptr;
     CWindow::Create(1280, 1024, &pWindow);
+    CGraphics::Create(pWindow->GetWindowHandle(), 1280, 1024, &gpGraphics);
     MessageLoop();
 
     return 0;

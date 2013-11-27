@@ -28,15 +28,20 @@ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 #pragma once
+#include <d3d11.h>
 
-class CWindow
+class CGraphics
 {
 public:
-    static bool Create(int width, int height, CWindow** ppWindow);
-    ~CWindow();
+    static bool Create(HWND hwnd, int width, int height, CGraphics** ppGraphics);
+    void ClearWindow();
 
-    HWND GetWindowHandle() const {return m_hWindow;}
+    ~CGraphics();
 private:
-    CWindow();
-    HWND m_hWindow;
+    CGraphics();
+    ID3D11Device* m_pDevice;
+    ID3D11DeviceContext* m_pImmediateContext;
+    IDXGISwapChain* m_pSwapChain;
+
+    ID3D11RenderTargetView* m_pBackBufferRTV;
 };
